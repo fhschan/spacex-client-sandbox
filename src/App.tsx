@@ -1,13 +1,28 @@
-import './styles.css'
-import logo from './react.png'
+import { ApolloProvider } from '@apollo/client'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { client as apolloClient } from './apollo/index'
 
-export default function App() {
+import SideNav from './components/navigation/SideNav'
+
+import Home from './components/pages/Home'
+import Launches from './components/pages/Launches'
+import History from './components/pages/History'
+
+function App() {
   return (
-    <>
-      <img src={logo} alt="React" width={100} height={100} />
-      <h1>
-        SpaceX demo - {process.env.NODE_ENV} {process.env.name}
-      </h1>
-    </>
+    <div className="App">
+      <ApolloProvider client={apolloClient}>
+        <Router>
+          <SideNav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/launches" element={<Launches />} />
+          </Routes>
+        </Router>
+      </ApolloProvider>
+    </div>
   )
 }
+
+export default App
